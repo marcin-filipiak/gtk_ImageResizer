@@ -1,0 +1,6 @@
+Package: ImageResizer
+Version: 0.1
+Architecture: all
+Maintainer: Marcin Filipiak
+Section: graphics
+Description: Images resizer
