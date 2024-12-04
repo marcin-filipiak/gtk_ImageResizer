@@ -143,37 +143,20 @@ void on_resize_button_clicked(GtkButton *button, gpointer data) {
 
 // Folder selection callback
 void on_location_button_clicked(GtkButton *button, gpointer data) {
-    static gchar *last_folder = NULL; // Statyczna zmienna przechowująca ostatnią ścieżkę
-
     GtkWidget *dialog = gtk_file_chooser_dialog_new("Select Directory", NULL,
                                                     GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                                     "_Cancel", GTK_RESPONSE_CANCEL,
                                                     "_Open", GTK_RESPONSE_ACCEPT, NULL);
 
-    if (last_folder) {
-        // Ustawienie ostatnio wybranej ścieżki jako początkowej w dialogu
-        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), last_folder);
-    }
-
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
         char *folder_path = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-
-        // Zaktualizowanie etykiety folderu
         gtk_label_set_text(GTK_LABEL(file_label), folder_path);
-
-        // Ustawienie przycisku "Resize Images" jako aktywnego
         gtk_widget_set_sensitive(resize_button, TRUE);
-
-        // Zapisanie wybranej ścieżki do statycznej zmiennej
-        g_free(last_folder);
-        last_folder = g_strdup(folder_path);
-
         g_free(folder_path);
     }
 
     gtk_widget_destroy(dialog);
 }
-
 
 // Main function
 int main(int argc, char *argv[]) {
